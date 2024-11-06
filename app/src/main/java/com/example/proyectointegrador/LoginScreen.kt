@@ -89,7 +89,7 @@ fun LoginScreen(navController: NavController) {
             ) {
                 Button(
                     onClick = {
-                        navController.navigate("plantList") // Cambiar a plantList
+                        navController.navigate("home/$name")
                     },
                     modifier = Modifier
                         .fillMaxWidth()

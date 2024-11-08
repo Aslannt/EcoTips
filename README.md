@@ -29,7 +29,7 @@ En esta sección se pueden agregar capturas de pantalla de las distintas pantall
 ## Instalación
 1. Clona el repositorio en Android Studio.
    ```bash
-       git clone https://github.com/Aslannt/EcoTipsApp.git
+       git clone https://github.com/Aslannt/EcoTips.git
    ```
 3. Configura un emulador o conecta tu dispositivo Android.
 4. Ejecuta la aplicación desde Android Studio.

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -38,6 +39,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -74,5 +76,12 @@ dependencies {
     implementation ("androidx.compose.ui:ui-text:1.0.1")
     implementation ("androidx.compose.ui:ui-text-google-fonts:1.0.1")
 
-
+    //Firefaase
+    implementation(platform("com.google.firebase:firebase-bom:33.5.0"))
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.database.ktx)
 }
+
+// Aplica el plugin de Google Services al final del archivo
+apply(plugin = "com.google.gms.google-services")

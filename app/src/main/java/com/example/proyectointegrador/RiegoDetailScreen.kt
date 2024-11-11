@@ -2,9 +2,7 @@ package com.example.proyectointegrador
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,27 +16,27 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun FertilizerDetailScreen(navController: NavController) {
-    var currentFertilizerIndex by remember { mutableStateOf(0) }
-    val fertilizers = listOf(
-        Fertilizer(
-            name = "Nitrorganic",
-            description = "Fertilizante técnicamente granulado con aporte de nitrógeno orgánico y minerales; fundamental en la síntesis de proteínas para alcanzar mayores rendimientos sin afectar el medio ambiente.",
-            imageRes = R.drawable.fertilizer_nitrorganic
+fun RiegoDetailScreen(navController: NavController) {
+    var currentRiegoIndex by remember { mutableStateOf(0) }
+    val riegoTools = listOf(
+        RiegoTool(
+            name = "Regadera",
+            description = "Una regadera es un recipiente portátil diseñado para regar plantas a mano. Tiene un pico largo y una rosa al final para distribuir el agua de manera uniforme.",
+            imageRes = R.drawable.watering_can
         ),
-        Fertilizer(
-            name = "Fertilizante 2",
-            description = "El Fertilizante Producción 17-6-18-2 x 50 Kg es una fórmula equilibrada diseñada para satisfacer las necesidades nutricionales de tus cultivos. Con una proporción de nutrientes de 17% de nitrógeno (N), 6% de fósforo (P), 18% de potasio (K) y 2% de azufre (S), este fertilizante promueve un crecimiento robusto y un desarrollo saludable de las plantas.",
-            imageRes = R.drawable.fertilizer_2 // Reemplaza con la imagen adecuada
+        RiegoTool(
+            name = "Manguera de Jardín",
+            description = "Una manguera de jardín es un tubo flexible utilizado para llevar agua a plantas y céspedes. Generalmente está equipado con una boquilla ajustable para controlar el flujo de agua.",
+            imageRes = R.drawable.garden_hose
         ),
-        Fertilizer(
-            name = "Fertilizante 3",
-            description = "YaraMila Rafos es un fertilizante granular con un alto contenido de fósforo que es especialmente necesario en etapas tempranas del cultivo para promover el desarrollo de raíces y el crecimiento de las plantas. También aporta nitrógeno, potasio, magnesio, azufre, boro y zinc en una relación óptima para el desarrollo en las primeras etapas del cultivo.",
-            imageRes = R.drawable.fertilizer_3 // Reemplaza con la imagen adecuada
+        RiegoTool(
+            name = "Rociador de Mano",
+            description = "Un rociador de mano es una herramienta pequeña y portátil que se utiliza para rociar agua o soluciones fertilizantes sobre las plantas. Es ideal para aplicaciones precisas.",
+            imageRes = R.drawable.hand_sprayer
         )
     )
 
-    val currentFertilizer = fertilizers[currentFertilizerIndex]
+    val currentRiegoTool = riegoTools[currentRiegoIndex]
 
     Column(
         modifier = Modifier
@@ -47,7 +45,7 @@ fun FertilizerDetailScreen(navController: NavController) {
             .background(Color.White)
     ) {
         Text(
-            text = currentFertilizer.name,
+            text = currentRiegoTool.name,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -56,8 +54,8 @@ fun FertilizerDetailScreen(navController: NavController) {
         )
 
         Image(
-            painter = painterResource(id = currentFertilizer.imageRes),
-            contentDescription = currentFertilizer.name,
+            painter = painterResource(id = currentRiegoTool.imageRes),
+            contentDescription = currentRiegoTool.name,
             modifier = Modifier
                 .height(450.dp)
                 .fillMaxWidth(),
@@ -67,7 +65,7 @@ fun FertilizerDetailScreen(navController: NavController) {
         Spacer(modifier = Modifier.weight(1f))
 
         Text(
-            text = currentFertilizer.description,
+            text = currentRiegoTool.description,
             fontSize = 16.sp,
             modifier = Modifier
                 .padding(top = 24.dp, bottom = 16.dp)
@@ -84,7 +82,7 @@ fun FertilizerDetailScreen(navController: NavController) {
         ) {
             Button(
                 onClick = {
-                    currentFertilizerIndex = (currentFertilizerIndex - 1 + fertilizers.size) % fertilizers.size
+                    currentRiegoIndex = (currentRiegoIndex - 1 + riegoTools.size) % riegoTools.size
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF2D5523)
@@ -95,7 +93,7 @@ fun FertilizerDetailScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    currentFertilizerIndex = (currentFertilizerIndex + 1) % fertilizers.size
+                    currentRiegoIndex = (currentRiegoIndex + 1) % riegoTools.size
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF2D5523)
@@ -120,4 +118,4 @@ fun FertilizerDetailScreen(navController: NavController) {
     }
 }
 
-data class Fertilizer(val name: String, val description: String, val imageRes: Int)
+data class RiegoTool(val name: String, val description: String, val imageRes: Int)

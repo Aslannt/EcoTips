@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,27 +17,27 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun FertilizerDetailScreen(navController: NavController) {
-    var currentFertilizerIndex by remember { mutableStateOf(0) }
-    val fertilizers = listOf(
-        Fertilizer(
-            name = "Nitrorganic",
-            description = "Fertilizante técnicamente granulado con aporte de nitrógeno orgánico y minerales; fundamental en la síntesis de proteínas para alcanzar mayores rendimientos sin afectar el medio ambiente.",
-            imageRes = R.drawable.fertilizer_nitrorganic
+fun ToolsDetailScreen(navController: NavController) {
+    var currentToolIndex by remember { mutableStateOf(0) }
+    val tools = listOf(
+        Tool(
+            name = "Horquilla de Mano",
+            description = "Una horquilla de mano es una herramienta pequeña de jardinería con tres o cuatro púas. Se usa para aflojar, levantar y voltear la tierra en jardinería y agricultura.",
+            imageRes = R.drawable.hand_fork
         ),
-        Fertilizer(
-            name = "Fertilizante 2",
-            description = "El Fertilizante Producción 17-6-18-2 x 50 Kg es una fórmula equilibrada diseñada para satisfacer las necesidades nutricionales de tus cultivos. Con una proporción de nutrientes de 17% de nitrógeno (N), 6% de fósforo (P), 18% de potasio (K) y 2% de azufre (S), este fertilizante promueve un crecimiento robusto y un desarrollo saludable de las plantas.",
-            imageRes = R.drawable.fertilizer_2 // Reemplaza con la imagen adecuada
+        Tool(
+            name = "Paleta de Mano",
+            description = "Una paleta es una herramienta pequeña con una hoja de metal en forma de pala y un mango. Se usa para cavar pequeños agujeros, trasplantar plántulas y otras tareas de jardinería a pequeña escala.",
+            imageRes = R.drawable.trowel
         ),
-        Fertilizer(
-            name = "Fertilizante 3",
-            description = "YaraMila Rafos es un fertilizante granular con un alto contenido de fósforo que es especialmente necesario en etapas tempranas del cultivo para promover el desarrollo de raíces y el crecimiento de las plantas. También aporta nitrógeno, potasio, magnesio, azufre, boro y zinc en una relación óptima para el desarrollo en las primeras etapas del cultivo.",
-            imageRes = R.drawable.fertilizer_3 // Reemplaza con la imagen adecuada
+        Tool(
+            name = "Cultivador de Mano",
+            description = "Un cultivador de mano es una herramienta de jardinería con tres o más dientes que se usa para romper el suelo, eliminar malezas y airear la tierra. Es ideal para preparar pequeñas parcelas de jardín y mantener la salud del suelo.",
+            imageRes = R.drawable.cultivator
         )
     )
 
-    val currentFertilizer = fertilizers[currentFertilizerIndex]
+    val currentTool = tools[currentToolIndex]
 
     Column(
         modifier = Modifier
@@ -47,7 +46,7 @@ fun FertilizerDetailScreen(navController: NavController) {
             .background(Color.White)
     ) {
         Text(
-            text = currentFertilizer.name,
+            text = currentTool.name,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -56,8 +55,8 @@ fun FertilizerDetailScreen(navController: NavController) {
         )
 
         Image(
-            painter = painterResource(id = currentFertilizer.imageRes),
-            contentDescription = currentFertilizer.name,
+            painter = painterResource(id = currentTool.imageRes),
+            contentDescription = currentTool.name,
             modifier = Modifier
                 .height(450.dp)
                 .fillMaxWidth(),
@@ -67,7 +66,7 @@ fun FertilizerDetailScreen(navController: NavController) {
         Spacer(modifier = Modifier.weight(1f))
 
         Text(
-            text = currentFertilizer.description,
+            text = currentTool.description,
             fontSize = 16.sp,
             modifier = Modifier
                 .padding(top = 24.dp, bottom = 16.dp)
@@ -84,7 +83,7 @@ fun FertilizerDetailScreen(navController: NavController) {
         ) {
             Button(
                 onClick = {
-                    currentFertilizerIndex = (currentFertilizerIndex - 1 + fertilizers.size) % fertilizers.size
+                    currentToolIndex = (currentToolIndex - 1 + tools.size) % tools.size
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF2D5523)
@@ -95,7 +94,7 @@ fun FertilizerDetailScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    currentFertilizerIndex = (currentFertilizerIndex + 1) % fertilizers.size
+                    currentToolIndex = (currentToolIndex + 1) % tools.size
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF2D5523)
@@ -120,4 +119,4 @@ fun FertilizerDetailScreen(navController: NavController) {
     }
 }
 
-data class Fertilizer(val name: String, val description: String, val imageRes: Int)
+data class Tool(val name: String, val description: String, val imageRes: Int)

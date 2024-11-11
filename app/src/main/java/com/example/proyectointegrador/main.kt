@@ -37,7 +37,7 @@ fun PlantListScreen(navController: NavController) {
 }
 
 @Composable
-fun PlantItem(plant: Plant, navController: NavController) {
+fun PlantItem(plant: Planta, navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -67,11 +67,3 @@ fun PlantItem(plant: Plant, navController: NavController) {
     }
 }
 
-data class Plant(val name: String, val description: String, val imageRes: Int)
-
-val plantsList = listOf(
-    Plant("Round Cactus", "Planta para hogar", R.drawable.round_cactus),
-    Plant("Cactus Pequeño", "Planta para escritorio", R.drawable.small_cactus),
-
-    // Agrega más plantas a la lista...
-)

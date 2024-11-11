@@ -36,7 +36,7 @@ fun NavGraph(navController: NavHostController) {
         composable("calendar") { CalendarScreen(navController) }
         composable("care") { CareScreen(navController) }
         composable("fertilizerDetail") { FertilizerDetailScreen(navController) }
-
-
+        composable("toolsDetail") { ToolsDetailScreen(navController) }
+        composable("riegoDetail") { RiegoDetailScreen(navController) }
     }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "229903710094",
+    "project_id": "ecotips-f78bd",
+    "storage_bucket": "ecotips-f78bd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229903710094:android:5035cdb755c1973acad6df",
+        "android_client_info": {
+          "package_name": "com.example.proyectointegrador"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAcANesq0nNSm9wOkaRR8GXfqEmprGkUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

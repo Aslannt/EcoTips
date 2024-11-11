@@ -1,5 +1,6 @@
 package com.example.proyectointegrador
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -11,8 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.proyectointegrador.navigation.NavGraph
 import com.example.proyectointegrador.ui.theme.ProyectoIntegradorTheme
 
-
-//FIREBASE
+// FIREBASE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -20,21 +20,25 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : ComponentActivity() {
-//    private lateinit var auth: FirebaseAuth
-//    private lateinit var database: DatabaseReference
+    // Inicialización de Firebase Auth y Database Reference
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         // Initialize Firebase Auth
-//        auth = Firebase.auth
-//        database = FirebaseDatabase.getInstance().reference
+        auth = Firebase.auth
+        database = FirebaseDatabase.getInstance().reference
 //        setContentView(R.layout.login_activity)
 //        val btnEnviar: Button = findViewById(R.id.btnEnviar)
 
-//        btnEnviar.setOnClickListener{
-//
+//        btnEnviar.setOnClickListener {
+
 //            val email = findViewById<TextView>(R.id.input_documento).text.toString()
 //            val password = findViewById<TextView>(R.id.input_contrasenia).text.toString()
-//
+
 //            if (email.isNotEmpty() && password.isNotEmpty()) {
 //                // Validar usuario con Firebase Auth
 //                auth.signInWithEmailAndPassword(email, password)
@@ -50,8 +54,7 @@ class MainActivity : ComponentActivity() {
 //                                        val permisoEmail = correoSnapshot.getValue(String::class.java)
 //                                        if (permisoEmail == email) {
 //                                            encontrado = true
-
-        ////////////////////// A QUE VISTA LO QUIERE DIRIGIR /////////////////////////
+//                                            // A que vista lo quiere dirigir
 //                                            val intent = Intent(this, RegisterUser::class.java)
 //                                            startActivity(intent)
 //                                            finish()
@@ -92,7 +95,7 @@ class MainActivity : ComponentActivity() {
 //            }
 //        }
 
-        super.onCreate(savedInstanceState)
+        // Configuración de la interfaz de usuario utilizando Jetpack Compose
         setContent {
             ProyectoIntegradorTheme {
                 val navController = rememberNavController()

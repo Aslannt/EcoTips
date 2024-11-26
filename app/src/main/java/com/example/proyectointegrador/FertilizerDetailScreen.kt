@@ -27,12 +27,12 @@ fun FertilizerDetailScreen(navController: NavController) {
             imageRes = R.drawable.fertilizer_nitrorganic
         ),
         Fertilizer(
-            name = "Fertilizante 2",
+            name = "Producción",
             description = "El Fertilizante Producción 17-6-18-2 x 50 Kg es una fórmula equilibrada diseñada para satisfacer las necesidades nutricionales de tus cultivos. Con una proporción de nutrientes de 17% de nitrógeno (N), 6% de fósforo (P), 18% de potasio (K) y 2% de azufre (S), este fertilizante promueve un crecimiento robusto y un desarrollo saludable de las plantas.",
             imageRes = R.drawable.fertilizer_2 // Reemplaza con la imagen adecuada
         ),
         Fertilizer(
-            name = "Fertilizante 3",
+            name = "Yara Mila",
             description = "YaraMila Rafos es un fertilizante granular con un alto contenido de fósforo que es especialmente necesario en etapas tempranas del cultivo para promover el desarrollo de raíces y el crecimiento de las plantas. También aporta nitrógeno, potasio, magnesio, azufre, boro y zinc en una relación óptima para el desarrollo en las primeras etapas del cultivo.",
             imageRes = R.drawable.fertilizer_3 // Reemplaza con la imagen adecuada
         )

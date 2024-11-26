@@ -9,13 +9,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.proyectointegrador.*
+import com.google.firebase.auth.FirebaseAuth
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
+import com.example.proyectointegrador.TipsScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, auth: FirebaseAuth) {
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") { SplashScreen(navController) }
-        composable("login") { LoginScreen(navController) }
+        composable("login") { LoginScreen(navController = navController, auth = auth) }
+        composable("register") { RegisterScreen(navController = navController, auth = auth) }
         composable("home/{username}") { backStackEntry ->
             HomeScreen(navController, userName = backStackEntry.arguments?.getString("username") ?: "Usuario")
         }
@@ -27,7 +32,7 @@ fun NavGraph(navController: NavHostController) {
                 navArgument("imageRes") { type = NavType.IntType }
             )
         ) { backStackEntry ->
-            val plantName = backStackEntry.arguments?.getString("plantName") ?: "Planta"
+            val plantName = backStackEntry.arguments?.getString("plantName")?.urlDecode() ?: "Planta"
             val plantDescription = backStackEntry.arguments?.getString("plantDescription")?.urlDecode() ?: "Descripción"
             val imageRes = backStackEntry.arguments?.getInt("imageRes") ?: R.drawable.logo_app
             PlantDetailScreen(navController, plantName, plantDescription, imageRes)
@@ -40,3 +45,6 @@ fun NavGraph(navController: NavHostController) {
         composable("riegoDetail") { RiegoDetailScreen(navController) }
     }
 }
+
+// Función para decodificar URLs
+fun String.urlDecode(): String = URLDecoder.decode(this, StandardCharsets.UTF_8.toString())

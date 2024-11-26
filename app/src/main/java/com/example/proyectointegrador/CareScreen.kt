@@ -76,3 +76,5 @@ fun CareItem(title: String, imageRes: Int, onClick: () -> Unit) {
         )
     }
 }
+
+

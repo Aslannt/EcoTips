@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,25 +16,42 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
+import java.util.UUID
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarScreen(navController: NavController) {
+    val reminderRepository = ReminderRepository()
+    val user = FirebaseAuth.getInstance().currentUser
+    val userId = user?.uid ?: ""
+    var reminders by remember { mutableStateOf(listOf<Reminder>()) }
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+    var showAddDialog by remember { mutableStateOf(false) }
     val currentMonth = selectedDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault())
     val currentYear = selectedDate.year
+
+    // Cargar recordatorios desde Firebase
+    LaunchedEffect(Unit) {
+        if (userId.isNotBlank()) {
+            reminderRepository.getReminders(userId) { loadedReminders ->
+                reminders = loadedReminders
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .background(Color.White)
+            .background(Color.White) // Fondo blanco
     ) {
+        // Título de la pantalla
         Text(
             text = "Calendario",
             fontSize = 28.sp,
@@ -41,6 +59,7 @@ fun CalendarScreen(navController: NavController) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        // Mes y año actual
         Text(
             text = "$currentMonth $currentYear",
             fontSize = 24.sp,
@@ -50,11 +69,13 @@ fun CalendarScreen(navController: NavController) {
                 .align(Alignment.CenterHorizontally)
         )
 
-        CalendarView(
+        // Vista del calendario
+        CustomCalendarView(
             selectedDate = selectedDate,
             onDateSelected = { newDate -> selectedDate = newDate }
         )
 
+        // Título para la lista de recordatorios
         Text(
             text = "Mis recordatorios",
             fontSize = 22.sp,
@@ -62,25 +83,54 @@ fun CalendarScreen(navController: NavController) {
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
+        // Lista de recordatorios
         LazyColumn {
-            item {
-                ReminderItem("Regar planta de la cocina.")
-                ReminderItem("Limpiar cactus de mi ventana.")
-                ReminderItem("Comprar fertilizante.")
-                ReminderItem("Seccionar mi basura reciclable.")
-            }
-            item {
-                TextButton(onClick = { /* Lógica para añadir un nuevo recordatorio */ }) {
-                    Text(text = "Añadir un nuevo recordatorio...")
-                }
+            items(reminders) { reminder ->
+                ReminderItem(
+                    text = reminder.description,
+                    checked = reminder.completed,
+                    onCheckedChange = { isChecked ->
+                        reminderRepository.completeReminder(userId, reminder.id, isChecked) { success ->
+                            if (success) {
+                                reminders = reminders.map {
+                                    if (it.id == reminder.id) it.copy(completed = isChecked) else it
+                                }
+                            }
+                        }
+                    }
+                )
             }
         }
+
+        // Botón para añadir un nuevo recordatorio
+        TextButton(onClick = { showAddDialog = true }) {
+            Text(text = "Añadir un nuevo recordatorio...")
+        }
+    }
+
+    // Diálogo para añadir un nuevo recordatorio
+    if (showAddDialog) {
+        AddReminderDialog(
+            onDismiss = { showAddDialog = false },
+            onAddReminder = { description ->
+                val newReminder = Reminder(
+                    id = UUID.randomUUID().toString(),
+                    date = selectedDate.toString(),
+                    description = description
+                )
+                reminderRepository.addReminder(userId, newReminder) { success ->
+                    if (success) {
+                        reminders = reminders + newReminder
+                    }
+                }
+            }
+        )
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CalendarView(selectedDate: LocalDate, onDateSelected: (LocalDate) -> Unit) {
+fun CustomCalendarView(selectedDate: LocalDate, onDateSelected: (LocalDate) -> Unit) {
     val daysOfWeek = DayOfWeek.values()
     val yearMonth = YearMonth.of(selectedDate.year, selectedDate.month)
     val firstDayOfMonth = yearMonth.atDay(1)
@@ -133,25 +183,5 @@ fun CalendarView(selectedDate: LocalDate, onDateSelected: (LocalDate) -> Unit) {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun ReminderItem(text: String) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-    ) {
-        Checkbox(
-            checked = false,
-            onCheckedChange = { /* Actualizar estado del recordatorio */ }
-        )
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            modifier = Modifier.padding(start = 8.dp)
-        )
     }
 }
